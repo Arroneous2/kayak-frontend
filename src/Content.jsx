@@ -1,6 +1,10 @@
 import { TripsIndex } from "./TripsIndex";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Signup } from "./Signup";
+import { Login } from "./Login";
+import { LogoutLink } from "./LogoutLink";
+import { TripsNew } from "./TripsNew";
 
 export function Content() {
   const [trips, setTrips] = useState([]);
@@ -13,10 +17,21 @@ export function Content() {
     });
   };
 
+  const handleCreateTrip = (params, successCallback) => {
+    console.log("handleCreatetrip", params);
+    axios.post("http://localhost:3000/trips.json", params).then((response) => {
+      setTrips([...trips, response.data]);
+      successCallback;
+    });
+  };
+
   useEffect(handleIndexTrips, []);
   return (
     <main>
-      <h1>Welcome to React!</h1>
+      <Signup />
+      <Login />
+      <LogoutLink />
+      <TripsNew onCreateTrip={handleCreateTrip} />
       <TripsIndex trips={trips} />
     </main>
   );
