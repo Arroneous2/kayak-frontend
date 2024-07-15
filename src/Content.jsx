@@ -5,9 +5,13 @@ import { Signup } from "./Signup";
 import { Login } from "./Login";
 import { LogoutLink } from "./LogoutLink";
 import { TripsNew } from "./TripsNew";
+import { Modal } from "./Modal";
+import { TripsShow } from "./TripsShow";
 
 export function Content() {
   const [trips, setTrips] = useState([]);
+  const [isTripsShowVisible, setIsTripsShowVisible] = useState(false);
+  const [currentTrip, setCurrentTrip] = useState({});
 
   const handleIndexTrips = () => {
     console.log("handleIndexTrips");
@@ -25,6 +29,16 @@ export function Content() {
     });
   };
 
+  const handleShowTrip = (trip) => {
+    console.log("handleShowTrip", trip);
+    setIsTripsShowVisible(true);
+    setCurrentTrip(trip);
+  };
+
+  const hanldeCloseShowTrip = () => {
+    setIsTripsShowVisible(false);
+  };
+
   useEffect(handleIndexTrips, []);
   return (
     <main>
@@ -32,7 +46,10 @@ export function Content() {
       <Login />
       <LogoutLink />
       <TripsNew onCreateTrip={handleCreateTrip} />
-      <TripsIndex trips={trips} />
+      <TripsIndex trips={trips} onShowTrip={handleShowTrip} />
+      <Modal show={isTripsShowVisible} onClose={hanldeCloseShowTrip}>
+        <TripsShow trip={currentTrip} />
+      </Modal>
     </main>
   );
 }

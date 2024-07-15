@@ -8,6 +8,7 @@ export function TripsIndex(props) {
           <img src={trip.image_url} alt="" />
           <p>Start_time: {trip.start_time}</p>
           <p>End_time: {trip.end_time}</p>
+          <button onClick={() => props.onShowTrip(trip)}> Trip Places Info</button>
         </div>
       ))}
     </div>
