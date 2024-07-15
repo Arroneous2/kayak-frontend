@@ -7,6 +7,7 @@ import { LogoutLink } from "./LogoutLink";
 import { TripsNew } from "./TripsNew";
 import { Modal } from "./Modal";
 import { TripsShow } from "./TripsShow";
+import { PlacesNew } from "./PlacesNew";
 
 export function Content() {
   const [trips, setTrips] = useState([]);
@@ -29,6 +30,13 @@ export function Content() {
     });
   };
 
+  const handleCreatePlace = (params, successCallback) => {
+    console.log("handleCreatePlace", params);
+    axios.post("http://localhost:3000/places.json", params).then(() => {
+      successCallback;
+    });
+  };
+
   const handleShowTrip = (trip) => {
     console.log("handleShowTrip", trip);
     setIsTripsShowVisible(true);
@@ -46,6 +54,7 @@ export function Content() {
       <Login />
       <LogoutLink />
       <TripsNew onCreateTrip={handleCreateTrip} />
+      <PlacesNew onCreatePlace={handleCreatePlace} />
       <TripsIndex trips={trips} onShowTrip={handleShowTrip} />
       <Modal show={isTripsShowVisible} onClose={hanldeCloseShowTrip}>
         <TripsShow trip={currentTrip} />
