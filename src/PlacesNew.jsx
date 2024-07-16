@@ -30,6 +30,12 @@ export function PlacesNew(props) {
         <div>
           end_time: <input name="end_time" type="datetime-local" />
         </div>
+        <div>
+          lat: <input name="lat" type="text" />
+        </div>
+        <div>
+          lng: <input name="lng" type="text" />
+        </div>
         <button type="submit">Create Place</button>
       </form>
     </div>
