@@ -43,11 +43,12 @@ export function Content() {
     setCurrentTrip(trip);
   };
 
-  const hanldeCloseShowTrip = () => {
+  const handleCloseShowTrip = () => {
     setIsTripsShowVisible(false);
   };
 
   useEffect(handleIndexTrips, []);
+
   return (
     <main>
       <Signup />
@@ -56,7 +57,7 @@ export function Content() {
       <TripsNew onCreateTrip={handleCreateTrip} />
       <PlacesNew onCreatePlace={handleCreatePlace} />
       <TripsIndex trips={trips} onShowTrip={handleShowTrip} />
-      <Modal show={isTripsShowVisible} onClose={hanldeCloseShowTrip}>
+      <Modal show={isTripsShowVisible} onClose={handleCloseShowTrip}>
         <TripsShow trip={currentTrip} />
       </Modal>
     </main>
