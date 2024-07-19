@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Signup } from "./Signup";
 import { Login } from "./Login";
-import { LogoutLink } from "./LogoutLink";
 import { TripsNew } from "./TripsNew";
 import { Modal } from "./Modal";
 import { TripsShow } from "./TripsShow";
 import { PlacesNew } from "./PlacesNew";
+import { Route, Routes } from "react-router-dom";
 
 export function Content() {
   const [trips, setTrips] = useState([]);
@@ -51,12 +51,14 @@ export function Content() {
 
   return (
     <main>
-      <Signup />
-      <Login />
-      <LogoutLink />
-      <TripsNew onCreateTrip={handleCreateTrip} />
-      <PlacesNew onCreatePlace={handleCreatePlace} />
-      <TripsIndex trips={trips} onShowTrip={handleShowTrip} />
+      <Routes>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/tripsnew" element={<TripsNew onCreateTrip={handleCreateTrip} />} />
+        <Route path="/placesnew" element={<PlacesNew onCreatePlace={handleCreatePlace} />} />
+        <Route path="/tripsindex" element={<TripsIndex trips={trips} onShowTrip={handleShowTrip} />} />
+      </Routes>
+
       <Modal show={isTripsShowVisible} onClose={handleCloseShowTrip}>
         <TripsShow trip={currentTrip} />
       </Modal>

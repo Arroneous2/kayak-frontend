@@ -1,8 +1,6 @@
 import { AdvancedMarker, Pin } from "@vis.gl/react-google-maps";
 
 export function PoiMarkers(props) {
-  console.log("props of poi", props.places[0].lat);
-
   return (
     <div>
       {props.places.map((place) => (
