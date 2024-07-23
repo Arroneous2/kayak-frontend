@@ -8,7 +8,6 @@ export function PoiMarkers(props) {
           key={place.id}
           position={{ lat: parseFloat(place.lat), lng: parseFloat(place.lng) }}
           clickable={true}
-          draggable={true}
         >
           <Pin background={"#FBBC04"} glyphColor={"#000"} borderColor={"#000"} />
         </AdvancedMarker>

@@ -1,8 +1,9 @@
-import { Map } from "@vis.gl/react-google-maps";
+import { Map, useMap } from "@vis.gl/react-google-maps";
 import { PoiMarkers } from "./PoiMarkers";
 import { LocateMe } from "./LocateMe";
 import { ControlPosition, MapControl } from "@vis.gl/react-google-maps";
 import { GoogleMapSearch } from "./GoogleMapSearch";
+import { useEffect } from "react";
 
 const initialCenter = {
   lat: -3.745,
@@ -10,6 +11,18 @@ const initialCenter = {
 };
 
 export function TripsShow(props) {
+  const map = useMap();
+
+  useEffect(() => {
+    if (map) {
+      const bounds = new window.google.maps.LatLngBounds();
+      props.trip.places.forEach((place) => {
+        bounds.extend(new window.google.maps.LatLng(place.lat, place.lng));
+      });
+      map.fitBounds(bounds);
+    }
+  }, [map, props]);
+
   return (
     <div>
       <h1>Trip information</h1>
