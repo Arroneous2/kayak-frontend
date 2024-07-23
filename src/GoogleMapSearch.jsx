@@ -11,15 +11,17 @@ import {
 export function GoogleMapSearch() {
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [markerRef, marker] = useAdvancedMarkerRef();
+  const [allowFitBounds, setAllowFitBounds] = useState(true);
 
   const MapHandler = ({ place, marker }) => {
     const map = useMap();
 
     useEffect(() => {
-      if (!map || !place || !marker) return;
+      if (!map || !place || !marker || !allowFitBounds) return;
 
       if (place.geometry?.viewport) {
         map.fitBounds(place.geometry?.viewport);
+        setAllowFitBounds(false);
       }
 
       marker.position = place.geometry?.location;
@@ -46,6 +48,7 @@ export function GoogleMapSearch() {
 
       placeAutocomplete.addListener("place_changed", () => {
         onPlaceSelect(placeAutocomplete.getPlace());
+        setAllowFitBounds(true);
       });
     }, [onPlaceSelect, placeAutocomplete]);
     return (
