@@ -1,4 +1,4 @@
-import { APIProvider, ControlPosition, MapControl, AdvancedMarker, Map, Pin } from "@vis.gl/react-google-maps";
+import { ControlPosition, MapControl, AdvancedMarker, Map, Pin } from "@vis.gl/react-google-maps";
 import { useState } from "react";
 import { LocateMe } from "./LocateMe";
 import { GoogleMapSearch } from "./GoogleMapSearch";
@@ -27,40 +27,33 @@ export function PlacesNew(props) {
   };
 
   const handleMapClick = (event) => {
-    console.log(event.detail);
     setFormLat(event.detail.latLng.lat);
     setFormLng(event.detail.latLng.lng);
   };
 
   return (
     <div>
-      <APIProvider
-        apiKey={import.meta.env.VITE_GOOGLE_MAPS_API_KEY}
-        solutionChannel="GMP_devsite_samples_v3_rgmautocomplete"
+      <Map
+        style={{ width: "50vw", height: "50vh" }}
+        defaultCenter={{ lat: 0, lng: 0 }}
+        defaultZoom={3}
+        gestureHandling={"greedy"}
+        mapId="6847afd112f5468"
+        onClick={handleMapClick}
       >
-        <Map
-          style={{ width: "50vw", height: "50vh" }}
-          defaultCenter={{ lat: 0, lng: 0 }}
-          defaultZoom={3}
-          gestureHandling={"greedy"}
-          mapId="6847afd112f5468"
-          onClick={handleMapClick}
+        <AdvancedMarker
+          position={{ lat: parseFloat(formLat), lng: parseFloat(formLng) }}
+          clickable={true}
+          draggable={true}
+          onDragEnd={handleDragEnd}
         >
-          <AdvancedMarker
-            position={{ lat: parseFloat(formLat), lng: parseFloat(formLng) }}
-            clickable={true}
-            draggable={true}
-            onDragEnd={handleDragEnd}
-          >
-            <Pin background={"#FBBC04"} glyphColor={"#000"} borderColor={"#000"} />
-          </AdvancedMarker>
-        </Map>
-        <MapControl position={ControlPosition.BOTTOM_LEFT}>
-          <LocateMe></LocateMe>
-        </MapControl>
-        <GoogleMapSearch></GoogleMapSearch>
-      </APIProvider>
-
+          <Pin background={"#FBBC04"} glyphColor={"#000"} borderColor={"#000"} />
+        </AdvancedMarker>
+      </Map>
+      <MapControl position={ControlPosition.BOTTOM_LEFT}>
+        <LocateMe></LocateMe>
+      </MapControl>
+      <GoogleMapSearch></GoogleMapSearch>
       <h1>New Place</h1>
       <form onSubmit={handleSubmit}>
         <div>
